@@ -1,32 +1,32 @@
 package com.epam.mentoring_p1.employees;
 
 import com.epam.mentoring_p1.models.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
 public class EmployeeController {
 
-    private final EmployeeService service;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService service) {
-        this.service = service;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-    @GetMapping("/employees")
-    void getEmployee() {
-        Employee employee = new Employee();
-        employee.setFirstName("Jarek");
-        System.out.println(employee);
+    @GetMapping("/employees/{employeeId}")
+    ResponseEntity<Employee> getEmployee(@PathVariable(value = "employeeId") Long employeeId) {
+        return employeeService.getEmployee(employeeId);
     }
 
     @PostMapping("/employees")
-    void addEmployee(@RequestBody @Valid Employee employee) {
-        service.addEmployee(employee);
-        System.out.println(employee);
+    ResponseEntity<Employee> addEmployee(@RequestBody @Valid Employee employee) {
+        return employeeService.addEmployee(employee);
+    }
+
+    @DeleteMapping("/employees/{employeeId}")
+    ResponseEntity<Employee> removeEmployee(@PathVariable(value = "employeeId") Long employeeId) {
+        return employeeService.removeEmployee(employeeId);
     }
 }

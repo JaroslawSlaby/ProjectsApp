@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long employeeId;
     @NotNull(message = "First name cannot be null")
     private String firstName;
@@ -24,8 +25,8 @@ public class Employee {
     private Address address;
     @NotNull(message = "Basic salary cannot be null")
     private BigDecimal salary;
-    @OneToMany
-    private Set<Payment> payments;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Payment> payments = new HashSet<>();
 
     public boolean makePayment(Payment payment) {
         return payment.isValidPayment() && payments.add(payment);

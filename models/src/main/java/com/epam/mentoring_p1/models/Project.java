@@ -1,6 +1,8 @@
 package com.epam.mentoring_p1.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -13,13 +15,14 @@ public class Project {
     private String projectName;
     @OneToOne
     private Employee manager;
-    @OneToMany
-    private Set<Employee> developers;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Contract> developers;
     @OneToMany
     private Set<Payment> payments;
 
-    public boolean addDeveloper(Employee developer) {
-        return developers.add(developer);
+    public boolean addDeveloper(Employee developer, LocalDate endDate) {
+        Contract contract = new Contract(developer, LocalDate.now(), endDate);
+        return developers.add(contract);
     }
 
     public boolean makePayment(Payment payment) {
@@ -50,11 +53,11 @@ public class Project {
         this.manager = manager;
     }
 
-    public Set<Employee> getDevelopers() {
+    public Set<Contract> getDevelopers() {
         return developers;
     }
 
-    public void setDevelopers(Set<Employee> developers) {
+    public void setDevelopers(Set<Contract> developers) {
         this.developers = developers;
     }
 

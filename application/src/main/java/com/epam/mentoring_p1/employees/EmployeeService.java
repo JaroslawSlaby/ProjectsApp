@@ -1,17 +1,12 @@
 package com.epam.mentoring_p1.employees;
 
 import com.epam.mentoring_p1.models.Employee;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
-@Service
-public class EmployeeService {
-    private final EmployeeRepository employeeRepository;
+public interface EmployeeService {
+    ResponseEntity<Employee> addEmployee(Employee employee);
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
-    }
+    ResponseEntity<Employee> getEmployee(Long employeeId);
 
-    public void addEmployee(Employee employee) {
-        employeeRepository.save(employee);
-    }
+    ResponseEntity<Employee> removeEmployee(Long employeeId);
 }
