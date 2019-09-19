@@ -2,7 +2,6 @@ package com.epam.mentoring_p1.models;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,7 @@ public class Project {
     private Employee manager;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Contract> developers;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Payment> payments;
 
     public boolean addDeveloper(Employee developer, LocalDate endDate) {
@@ -25,8 +24,12 @@ public class Project {
         return developers.add(contract);
     }
 
+    public boolean removeDeveloper(Employee developer) {
+        return developers.removeIf(contract -> contract.getEmployee().getEmployeeId().equals(developer.getEmployeeId()));
+    }
+
     public boolean makePayment(Payment payment) {
-        return payment.isValidPayment() && payments.add(payment);
+        return payments.add(payment);
     }
 
     public Long getProjectId() {

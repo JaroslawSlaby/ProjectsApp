@@ -29,7 +29,11 @@ public class Employee {
     private Set<Payment> payments = new HashSet<>();
 
     public boolean makePayment(Payment payment) {
-        return payment.isValidPayment() && payments.add(payment);
+        return payments.add(payment);
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
     public String getFirstName() {

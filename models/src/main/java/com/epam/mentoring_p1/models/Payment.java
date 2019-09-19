@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -13,19 +13,22 @@ public class Payment {
     @Id
     @GeneratedValue
     private Long paymentId;
-    private Date paymentDate;
+    private LocalDate paymentDate;
     private BigDecimal paymentAmount;
 
-
-    public boolean isValidPayment() {
-        return paymentAmount.doubleValue() > 0d;
+    public Payment() {
     }
 
-    public Date getPaymentDate() {
+    public Payment(LocalDate paymentDate, BigDecimal paymentAmount) {
+        this.paymentDate = paymentDate;
+        this.paymentAmount = paymentAmount;
+    }
+
+    public LocalDate getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
 

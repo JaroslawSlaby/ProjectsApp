@@ -28,26 +28,46 @@ public class ProjectStaffOperationsImpl implements ProjectStaffOperations {
 
     @Override
     public Set<Employee> getDeveloperList(Long projectId) {
-        Optional<Project> project = projectRepository.findById(projectId);
+        Optional<Project> project = getProjectFromDB(projectId);
         return project.orElseThrow(getProjectNotFoundException(projectId))
                 .getDevelopers()
                 .stream()
                 .map(Contract::getEmployee)
                 .collect(Collectors.toSet());
-
     }
 
     @Override
-    public Boolean addDeveloperToProject(Long projectId, Long employeeId, LocalDate endDate) {
-        Optional<Project> projectFromDB = projectRepository.findById(projectId);
-        Project project = projectFromDB.orElseThrow(getProjectNotFoundException(projectId));
+    public Project addDeveloperToProject(Long projectId, Long employeeId, LocalDate endDate) {
+        Project project = getProject(projectId);
+        Employee employee = getEmployee(employeeId);
+        project.addDeveloper(employee, endDate);
+        return projectRepository.save(project);
+    }
 
-        Optional<Employee> employeeFromDB = employeeRepository.findById(employeeId);
-        Employee employee = employeeFromDB.orElseThrow(getEmployeeNotFoundException(projectId));
+    @Override
+    public Project removeDeveloperFromProject(Long projectId, Long employeeId) {
+        Project project = getProject(projectId);
+        Employee employee = getEmployee(employeeId);
+        project.removeDeveloper(employee);
+        return projectRepository.save(project);
+    }
 
-        boolean isAdded = project.addDeveloper(employee, endDate);
-        projectRepository.save(project);
-        return isAdded;
+    private Employee getEmployee(Long employeeId) {
+        Optional<Employee> employeeFromDB = getEmployeeFromDB(employeeId);
+        return employeeFromDB.orElseThrow(getEmployeeNotFoundException(employeeId));
+    }
+
+    private Project getProject(Long projectId) {
+        Optional<Project> projectFromDB = getProjectFromDB(projectId);
+        return projectFromDB.orElseThrow(getProjectNotFoundException(projectId));
+    }
+
+    private Optional<Project> getProjectFromDB(Long projectId) {
+        return projectRepository.findById(projectId);
+    }
+
+    private Optional<Employee> getEmployeeFromDB(Long employeeId) {
+        return employeeRepository.findById(employeeId);
     }
 
     private Supplier<EmployeeNotFoundException> getEmployeeNotFoundException(Long employeeId) {
