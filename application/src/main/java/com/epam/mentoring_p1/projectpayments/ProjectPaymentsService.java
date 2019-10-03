@@ -1,6 +1,6 @@
 package com.epam.mentoring_p1.projectpayments;
 
-import com.epam.mentoring_p1.models.Payment;
+import com.epam.mentoring_p1.repomodels.Payment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

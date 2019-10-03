@@ -1,11 +1,12 @@
-package com.epam.mentoring_p1.models;
+package com.epam.mentoring_p1.repomodels;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-public class Project {
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue

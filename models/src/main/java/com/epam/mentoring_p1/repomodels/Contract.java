@@ -1,4 +1,4 @@
-package com.epam.mentoring_p1.models;
+package com.epam.mentoring_p1.repomodels;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

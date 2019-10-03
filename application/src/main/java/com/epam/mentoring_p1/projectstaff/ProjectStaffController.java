@@ -1,7 +1,7 @@
 package com.epam.mentoring_p1.projectstaff;
 
-import com.epam.mentoring_p1.models.Employee;
-import com.epam.mentoring_p1.models.Project;
+import com.epam.mentoring_p1.dtomodels.EmployeeDTO;
+import com.epam.mentoring_p1.dtomodels.ProjectDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,12 @@ public class ProjectStaffController {
     }
 
     @GetMapping("/projectStaff/{projectId}")
-    ResponseEntity<Set<Employee>> getProjectDevelopers(@PathVariable(value = "projectId") Long projectId) {
+    ResponseEntity<Set<EmployeeDTO>> getProjectDevelopers(@PathVariable(value = "projectId") Long projectId) {
         return projectStaffService.getProjectDevelopers(projectId);
     }
 
     @PostMapping("/projectStaff/{projectId}/addDev/{employeeId}/date/{endDate}")
-    ResponseEntity<Project> addDeveloperToProject
+    ResponseEntity<ProjectDTO> addDeveloperToProject
             (@PathVariable(value = "projectId") Long projectId,
              @PathVariable(value = "employeeId") Long employeeId,
              @PathVariable(value = "endDate") String endDate) {
@@ -30,7 +30,7 @@ public class ProjectStaffController {
     }
 
     @DeleteMapping("/projectStaff/{projectId}/removeDev/{employeeId}")
-    ResponseEntity<Project> removeDeveloperFromProject
+    ResponseEntity<ProjectDTO> removeDeveloperFromProject
             (@PathVariable(value = "projectId") Long projectId,
              @PathVariable(value = "employeeId") Long employeeId) {
         return projectStaffService.removeDeveloperFromProject(projectId, employeeId);

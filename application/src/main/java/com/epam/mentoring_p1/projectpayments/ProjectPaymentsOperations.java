@@ -1,6 +1,6 @@
 package com.epam.mentoring_p1.projectpayments;
 
-import com.epam.mentoring_p1.models.Payment;
+import com.epam.mentoring_p1.repomodels.Payment;
 
 import java.util.Set;
 

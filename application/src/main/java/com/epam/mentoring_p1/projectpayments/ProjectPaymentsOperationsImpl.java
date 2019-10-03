@@ -2,8 +2,8 @@ package com.epam.mentoring_p1.projectpayments;
 
 import com.epam.mentoring_p1.exceptions.InvalidPaymentException;
 import com.epam.mentoring_p1.exceptions.ProjectNotFoundException;
-import com.epam.mentoring_p1.models.Payment;
-import com.epam.mentoring_p1.models.Project;
+import com.epam.mentoring_p1.repomodels.Payment;
+import com.epam.mentoring_p1.repomodels.Project;
 import com.epam.mentoring_p1.projects.ProjectRepository;
 import org.springframework.stereotype.Service;
 

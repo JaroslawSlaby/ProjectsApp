@@ -1,6 +1,6 @@
 package com.epam.mentoring_p1.projects;
 
-import com.epam.mentoring_p1.models.Project;
+import com.epam.mentoring_p1.dtomodels.ProjectDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +16,17 @@ public class ProjectController {
     }
 
     @GetMapping("/projects/{projectId}")
-    ResponseEntity<Project> getProject(@PathVariable(value = "projectId") Long projectId) {
+    ResponseEntity<ProjectDTO> getProject(@PathVariable(value = "projectId") Long projectId) {
         return projectService.getProject(projectId);
     }
 
     @PostMapping("/projects")
-    ResponseEntity<Project> addProject(@RequestBody @Valid Project project) {
+    ResponseEntity<ProjectDTO> addProject(@RequestBody @Valid ProjectDTO project) {
         return projectService.addProject(project);
     }
 
     @DeleteMapping("/projects/{projectId}")
-    ResponseEntity<Project> removeProject(@PathVariable(value = "projectId") Long projectId) {
+    ResponseEntity<ProjectDTO> removeProject(@PathVariable(value = "projectId") Long projectId) {
         return projectService.removeProject(projectId);
     }
 }

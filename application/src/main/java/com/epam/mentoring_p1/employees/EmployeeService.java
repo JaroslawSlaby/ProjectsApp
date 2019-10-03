@@ -1,12 +1,12 @@
 package com.epam.mentoring_p1.employees;
 
-import com.epam.mentoring_p1.models.Employee;
+import com.epam.mentoring_p1.dtomodels.EmployeeDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface EmployeeService {
-    ResponseEntity<Employee> addEmployee(Employee employee);
+    ResponseEntity<EmployeeDTO> addEmployee(EmployeeDTO employee);
 
-    ResponseEntity<Employee> getEmployee(Long employeeId);
+    ResponseEntity<EmployeeDTO> getEmployee(Long employeeId);
 
-    ResponseEntity<Employee> removeEmployee(Long employeeId);
+    ResponseEntity<EmployeeDTO> removeEmployee(Long employeeId);
 }

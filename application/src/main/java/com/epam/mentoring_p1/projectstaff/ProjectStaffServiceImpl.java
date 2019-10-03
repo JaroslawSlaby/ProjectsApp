@@ -1,7 +1,7 @@
 package com.epam.mentoring_p1.projectstaff;
 
-import com.epam.mentoring_p1.models.Employee;
-import com.epam.mentoring_p1.models.Project;
+import com.epam.mentoring_p1.dtomodels.EmployeeDTO;
+import com.epam.mentoring_p1.dtomodels.ProjectDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,24 +21,24 @@ public class ProjectStaffServiceImpl implements ProjectStaffService {
     }
 
     @Override
-    public ResponseEntity<Set<Employee>> getProjectDevelopers(Long projectId) {
-        Set<Employee> developers = projectStaffOperations.getDeveloperList(projectId);
+    public ResponseEntity<Set<EmployeeDTO>> getProjectDevelopers(Long projectId) {
+        Set<EmployeeDTO> developers = projectStaffOperations.getDeveloperList(projectId);
         return new ResponseEntity<>(developers, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Project> addDeveloperToProject(Long projectId, Long employeeId, String endDate) {
-        Project project = projectStaffOperations.addDeveloperToProject(projectId, employeeId, LocalDate.parse(endDate, formatter));
+    public ResponseEntity<ProjectDTO> addDeveloperToProject(Long projectId, Long employeeId, String endDate) {
+        ProjectDTO project = projectStaffOperations.addDeveloperToProject(projectId, employeeId, LocalDate.parse(endDate, formatter));
         return createResponse(project);
     }
 
     @Override
-    public ResponseEntity<Project> removeDeveloperFromProject(Long projectId, Long employeeId) {
-        Project project = projectStaffOperations.removeDeveloperFromProject(projectId, employeeId);
+    public ResponseEntity<ProjectDTO> removeDeveloperFromProject(Long projectId, Long employeeId) {
+        ProjectDTO project = projectStaffOperations.removeDeveloperFromProject(projectId, employeeId);
         return createResponse(project);
     }
 
-    private ResponseEntity<Project> createResponse(Project project) {
+    private ResponseEntity<ProjectDTO> createResponse(ProjectDTO project) {
         return new ResponseEntity<>(project, project != null ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 }

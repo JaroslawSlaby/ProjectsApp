@@ -1,12 +1,15 @@
 package com.epam.mentoring_p1.projectstaff;
 
+import com.epam.mentoring_p1.dtomodels.ContractDTO;
+import com.epam.mentoring_p1.dtomodels.EmployeeDTO;
+import com.epam.mentoring_p1.dtomodels.ProjectDTO;
 import com.epam.mentoring_p1.employees.EmployeeRepository;
 import com.epam.mentoring_p1.exceptions.EmployeeNotFoundException;
 import com.epam.mentoring_p1.exceptions.ProjectNotFoundException;
-import com.epam.mentoring_p1.models.Contract;
-import com.epam.mentoring_p1.models.Employee;
-import com.epam.mentoring_p1.models.Project;
+import com.epam.mentoring_p1.repomodels.Employee;
+import com.epam.mentoring_p1.repomodels.Project;
 import com.epam.mentoring_p1.projects.ProjectRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,36 +23,42 @@ public class ProjectStaffOperationsImpl implements ProjectStaffOperations {
 
     private final ProjectRepository projectRepository;
     private final EmployeeRepository employeeRepository;
+    private final ModelMapper mapper;
 
-    public ProjectStaffOperationsImpl(ProjectRepository projectRepository, EmployeeRepository employeeRepository) {
+    public ProjectStaffOperationsImpl(ProjectRepository projectRepository, EmployeeRepository employeeRepository, ModelMapper mapper) {
         this.projectRepository = projectRepository;
         this.employeeRepository = employeeRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    public Set<Employee> getDeveloperList(Long projectId) {
-        Optional<Project> project = getProjectFromDB(projectId);
-        return project.orElseThrow(getProjectNotFoundException(projectId))
+    public Set<EmployeeDTO> getDeveloperList(Long projectId) {
+        Optional<Project> projectFromDB = getProjectFromDB(projectId);
+        Project project = projectFromDB.orElseThrow(getProjectNotFoundException(projectId));
+        return mapper.map(project, ProjectDTO.class)
                 .getDevelopers()
                 .stream()
-                .map(Contract::getEmployee)
+                .map(ContractDTO::getEmployee)
+                .map(employee -> mapper.map(employee, EmployeeDTO.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Project addDeveloperToProject(Long projectId, Long employeeId, LocalDate endDate) {
+    public ProjectDTO addDeveloperToProject(Long projectId, Long employeeId, LocalDate endDate) {
         Project project = getProject(projectId);
         Employee employee = getEmployee(employeeId);
         project.addDeveloper(employee, endDate);
-        return projectRepository.save(project);
+        Project saved = projectRepository.save(project);
+        return mapper.map(saved, ProjectDTO.class);
     }
 
     @Override
-    public Project removeDeveloperFromProject(Long projectId, Long employeeId) {
+    public ProjectDTO removeDeveloperFromProject(Long projectId, Long employeeId) {
         Project project = getProject(projectId);
         Employee employee = getEmployee(employeeId);
         project.removeDeveloper(employee);
-        return projectRepository.save(project);
+        Project saved = projectRepository.save(project);
+        return mapper.map(saved, ProjectDTO.class);
     }
 
     private Employee getEmployee(Long employeeId) {

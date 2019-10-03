@@ -1,12 +1,12 @@
 package com.epam.mentoring_p1.projects;
 
-import com.epam.mentoring_p1.models.Project;
+import com.epam.mentoring_p1.dtomodels.ProjectDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface ProjectService {
-    ResponseEntity<Project> addProject(Project project);
+    ResponseEntity<ProjectDTO> addProject(ProjectDTO project);
 
-    ResponseEntity<Project> getProject(Long projectId);
+    ResponseEntity<ProjectDTO> getProject(Long projectId);
 
-    ResponseEntity<Project> removeProject(Long projectId);
+    ResponseEntity<ProjectDTO> removeProject(Long projectId);
 }
