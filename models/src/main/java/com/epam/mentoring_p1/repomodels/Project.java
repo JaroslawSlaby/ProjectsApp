@@ -20,7 +20,7 @@ public class Project {
     private Set<Payment> payments;
 
     public boolean addDeveloper(Employee developer, LocalDate endDate) {
-        Contract contract = new Contract(developer, LocalDate.now(), endDate);
+        Contract contract = new Contract(developer, LocalDate.now(), endDate); //TODO: extract contract to another table
         return developers.add(contract);
     }
 
