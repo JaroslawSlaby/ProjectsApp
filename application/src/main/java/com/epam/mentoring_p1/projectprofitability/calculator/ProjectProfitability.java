@@ -1,4 +1,4 @@
-package com.epam.mentoring_p1.projectprofitability;
+package com.epam.mentoring_p1.projectprofitability.calculator;
 
 import com.epam.mentoring_p1.dtomodels.ReportDTO;
 

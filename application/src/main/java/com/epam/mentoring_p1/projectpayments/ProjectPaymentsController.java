@@ -1,6 +1,7 @@
 package com.epam.mentoring_p1.projectpayments;
 
 import com.epam.mentoring_p1.repomodels.Payment;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ public class ProjectPaymentsController {
         this.projectPaymentsService = projectPaymentsService;
     }
 
-    @GetMapping("/projectPayments/{projectId}")
+    @GetMapping(value = "/projectPayments/{projectId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Set<Payment>> getProjectPayments(@PathVariable(value = "projectId") Long projectId) {
         return projectPaymentsService.getProjectPayments(projectId);
     }
